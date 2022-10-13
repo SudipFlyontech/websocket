@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <form action="{% url 'login' %}" method="post">
+  <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     {% for field in form %}
       <div>
@@ -12,4 +12,5 @@
     <button type="submit">Log in</button>
   </form>
   <p>Don't have an account? <a href="{% url 'signup' %}">Sign up!</a></p>
+  <p>Go back to Home <a href="{% url 'index' %}">Home</a></p>
 {% endblock content %}

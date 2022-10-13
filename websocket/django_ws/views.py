@@ -1,3 +1,4 @@
+from xmlrpc.client import Boolean
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.urls import reverse
@@ -41,7 +42,7 @@ def index(request):
 
 
 # @login_required(login_url='/login/')
-# def user_list(request):
+# def User_List(request):
 #     """
 #     NOTE: This is fine for demonstration purposes, but this should be
 #     refactored before we deploy this app to production.
@@ -51,32 +52,41 @@ def index(request):
 #     users = User.objects.select_related('logged_in_user')
 #     for user in users:
 #         user.status = 'Online' if hasattr(user, 'logged_in_user') else 'Offline'
-#     return render(request, 'example/user_list.html', {'users': users})
+#     return render(request, 'user_list.html', {'users': users})
 
 
-# def login(request):
-#     form = AuthenticationForm()
-#     if request.method == 'POST':
-#         form = AuthenticationForm(data=request.POST)
-#         if form.is_valid():
-#             login(request, form.get_user())
-#             return redirect(reverse('user_list'))
-#         else:
-#             print(form.errors)
-#     return render(request, 'login.html', {'form': form})
-
-# def signup(request):
-#     form = UserCreationForm()
-#     if request.method == 'POST':
-#         form = UserCreationForm(data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect(reverse('login'))
-#         else:
-#             print(form.errors)
-#     return render(request, 'signup.html', {'form': form})
+@login_required(login_url='/login/')
+def User_List(request):
+    users = User.objects.all()
+    return render(request, 'user_list.html' ,{'users': users,'login_user':request.user.username})
 
 
-# def logout(request):
-#     logout(request)
-#     return redirect(reverse('login'))
+def Signup(request):
+    form = UserCreationForm()
+    if request.method == 'POST':
+        form = UserCreationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('login'))
+        else:
+            print(form.errors)
+    return render(request, 'signup.html', {'form': form})
+
+def UserLogin(request):
+    form = AuthenticationForm()
+    
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            
+            login(request, form.get_user())
+            return redirect(reverse('user_list'))
+        else:
+            print(form.errors)
+    return render(request, 'login.html', {'form': form})
+
+
+
+def UserLogout(request):
+    logout(request)
+    return redirect(reverse('login'))

@@ -9,10 +9,10 @@ from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshVie
 urlpatterns = [
     path('index/', views.index, name='index'),
     path('message/', views.MessageSendAPIView.as_view()),
-    # path('signup', views.signup, name='signup'),
-    # path('login', views.login, name='login'),
-    # path('logout', views.logout, name='logout'),
-    # path('user_list', user_list, name='user_list'),
+    path('signup/', views.Signup, name='signup'),
+    path('login/', views.UserLogin, name='login'),
+    path('logout', views.UserLogout, name='logout'),
+    path('user_list', views.User_List, name='user_list'),
     # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
