@@ -2,15 +2,18 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.urls import reverse
 from rest_framework import status
-# from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import render, redirect
-from .models import Message
-# from django.contrib.auth import get_user_model
-# from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-# from django.contrib.auth import get_user_model, login, logout
-# from django.contrib.auth.decorators import login_required
+from .models import *
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.decorators import login_required
+
+
+User=get_user_model()
+
 
 class MessageSendAPIView(APIView):
     # permission_classes = (IsAuthenticated)
@@ -36,7 +39,6 @@ class MessageSendAPIView(APIView):
 def index(request):
     return render(request,"index.html")
 
-# User = get_user_model()
 
 # @login_required(login_url='/login/')
 # def user_list(request):
