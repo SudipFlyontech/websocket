@@ -50,8 +50,8 @@ atlassian-ide-plugin.xml
 *$py.class 
 
 # Distribution / packaging 
-.Python build/ 
-develop-eggs/ 
+.Python build/
+develop-eggs/
 dist/ 
 downloads/ 
 eggs/ 
