@@ -1,0 +1,29 @@
+<h1>Web Socket Connected</h1>
+
+{% comment %} {% extends 'base.html' %}
+
+{% block content %}
+  <p>Don't have an account? <a href="{% url 'signup' %}">Sign up!</a></p>
+  <p>Already have an account? <a href="{% url 'login' %}">Log in!</a></p>
+{% endblock content %} {% endcomment %}
+
+<script>
+    // var user_id= 1
+    // let socket = new WebSocket('ws://127.0.0.1:8002/ws/api/staff/' + user_id);
+    // var manager_id= 5
+    // let socket = new WebSocket('ws://127.0.0.1:8002/ws/api/daily_tasks/' + manager_id);
+    var company_id= 5
+    let socket = new WebSocket('ws://127.0.0.1:8000/ws/msg/1');
+    socket.onopen = function (e) {
+      console.log('Connection established');
+    };
+  
+    socket.onmessage = function (e) {
+      var data = JSON.parse(e.data)
+      console.log(data)     
+    };
+    socket.onclose = function (e) {
+      console.log('Connection closed');
+    };  
+  
+  </script>

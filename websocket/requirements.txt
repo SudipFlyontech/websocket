@@ -1,0 +1,5 @@
+channels
+channels-redis
+Django
+djangorestframework
+djangorestframework-simplejwt
