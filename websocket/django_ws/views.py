@@ -4,6 +4,7 @@ from channels.layers import get_channel_layer
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import render, redirect
@@ -40,19 +41,6 @@ class MessageSendAPIView(APIView):
 def index(request):
     return render(request,"index.html")
 
-
-# @login_required(login_url='/login/')
-# def User_List(request):
-#     """
-#     NOTE: This is fine for demonstration purposes, but this should be
-#     refactored before we deploy this app to production.
-#     Imagine how 100,000 users logging in and out of our app would affect
-#     the performance of this code!
-#     """
-#     users = User.objects.select_related('logged_in_user')
-#     for user in users:
-#         user.status = 'Online' if hasattr(user, 'logged_in_user') else 'Offline'
-#     return render(request, 'user_list.html', {'users': users})
 
 
 @login_required(login_url='/login/')

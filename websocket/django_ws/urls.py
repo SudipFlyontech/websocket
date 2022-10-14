@@ -13,6 +13,6 @@ urlpatterns = [
     path('login/', views.UserLogin, name='login'),
     path('logout', views.UserLogout, name='logout'),
     path('user_list', views.User_List, name='user_list'),
-    # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
