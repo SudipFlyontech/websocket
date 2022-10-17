@@ -3,6 +3,8 @@ from attr import fields
 from django.forms import PasswordInput
 from rest_framework import serializers
 from .models import *
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 

@@ -1,4 +1,3 @@
-from xmlrpc.client import Boolean
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.urls import reverse
@@ -8,6 +7,8 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import render, redirect
+
+from .serializers import *
 from .models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import get_user_model, login, logout
@@ -49,16 +50,16 @@ def User_List(request):
     return render(request, 'user_list.html' ,{'users': users,'login_user':request.user.username})
 
 
-def Signup(request):
-    form = UserCreationForm()
-    if request.method == 'POST':
-        form = UserCreationForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('login'))
-        else:
-            print(form.errors)
-    return render(request, 'signup.html', {'form': form})
+# def Signup(request):
+#     form = UserCreationForm()
+#     if request.method == 'POST':
+#         form = UserCreationForm(data=request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect(reverse('login'))
+#         else:
+#             print(form.errors)
+#     return render(request, 'signup.html', {'form': form})
 
 def UserLogin(request):
     form = AuthenticationForm()
@@ -78,3 +79,21 @@ def UserLogin(request):
 def UserLogout(request):
     logout(request)
     return redirect(reverse('login'))
+
+
+class SignUpView(APIView):
+    def get(self, request, *args, **kwargs):
+        user = User.objects.all()
+        serializers = UserSerializer(user)
+        return Response(serializers.errors)
+    
+    def post(self, request, *args, **kwargs):
+        # user = User.objects.all()
+        serializer = UserSerializer(data=request.data)
+        # if request.method == 'POST':
+        #     form = UserCreationForm(data=request.POST)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'data': serializer.data})
+        else:
+            return render(request, "signup.html")

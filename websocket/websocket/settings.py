@@ -61,10 +61,12 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': ("rest_framework.renderers.JSONRenderer",),
     'DEFAULT_AUTHENTICATION_CLASSES': (
     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        "rest_framework.renderers.JSONRenderer",
+        )
 }
 
 SIMPLE_JWT = {
@@ -72,6 +74,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(weeks=1),
     'ALGORITHM': 'HS256',
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8000",
+]
 
 ROOT_URLCONF = 'websocket.urls'
 
