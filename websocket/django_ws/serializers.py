@@ -1,6 +1,4 @@
 from pyexpat import model
-from attr import fields
-from django.forms import PasswordInput
 from rest_framework import serializers
 from .models import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -8,11 +6,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 
-class UserSerializer(serializers.Serializer):
+class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['username', 'password']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -24,3 +22,10 @@ class UserSerializer(serializers.Serializer):
                 instance.set_password(password)
             instance.save()
             return instance
+        
+        # def validate(self, attrs):
+        #     password = attrs.get('password')
+        #     password2 = attrs.get('password')
+        #     if password != password2:
+        #         raise serializers.ValidationError("Password doesn't match")
+        #     return attrs

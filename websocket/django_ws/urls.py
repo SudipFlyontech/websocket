@@ -10,7 +10,6 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('message/', views.MessageSendAPIView.as_view()),
     path('signup/', views.SignUpView.as_view(), name='signup'),
-    # path("register/", views.SignupAPIView.as_view(), name="register"),
     path('login/', views.UserLogin, name='login'),
     path('logout', views.UserLogout, name='logout'),
     path('user_list', views.User_List, name='user_list'),

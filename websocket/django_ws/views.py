@@ -1,3 +1,4 @@
+from pipes import Template
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.urls import reverse
@@ -7,7 +8,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import render, redirect
-
+from rest_framework.renderers import TemplateHTMLRenderer
 from .serializers import *
 from .models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -82,18 +83,23 @@ def UserLogout(request):
 
 
 class SignUpView(APIView):
-    def get(self, request, *args, **kwargs):
-        user = User.objects.all()
-        serializers = UserSerializer(user)
-        return Response(serializers.errors)
+    renderer_classes = [TemplateHTMLRenderer]
+
     
     def post(self, request, *args, **kwargs):
-        # user = User.objects.all()
-        serializer = UserSerializer(data=request.data)
-        # if request.method == 'POST':
-        #     form = UserCreationForm(data=request.POST)
+        form = UserCreationForm()
+        data=request.POST
+        serializer = UserSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'data': serializer.data})
+            return redirect("UserLogin")
         else:
-            return render(request, "signup.html")
+            print(str(serializer.errors))
+            return Response({"error":serializer.errors,"form":form},template_name = 'signup.html')
+        
+    def get(self, request, *args, **kwargs):
+        form = UserCreationForm()
+        user = User.objects.all()
+        serializers = UserSerializer(user, many=True)
+        return Response({"users":serializers.data,"form":form},template_name = 'signup.html')
+    
